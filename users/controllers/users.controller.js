@@ -2,8 +2,8 @@ const UserModel = require("../models/users.model");
 const crypto = require("crypto");
 
 exports.insert = (req, res) => {
+  // Makes sure the email address does not exist already});
   let salt = crypto.randomBytes(16).toString("base64");
-  console.log(req.body.password);
 
   let hash = crypto
     .createHmac("sha512", salt)
@@ -11,9 +11,14 @@ exports.insert = (req, res) => {
     .digest("base64");
   req.body.password = salt + "$" + hash;
   req.body.permissionLevel = 1;
-  UserModel.createUser(req.body).then(result => {
-    res.status(201).send({ id: result._id });
-  });
+
+  UserModel.createUser(req.body)
+    .then(result => {
+      res.status(201).send({ id: result._id });
+    })
+    .catch(function(error) {
+      res.status(409).send(error);
+    });
 };
 
 exports.list = (req, res) => {

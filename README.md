@@ -26,6 +26,22 @@ To run the project, please use a command line the following:
 
 - mongodb configuration in common/services/mongoose.service
 
+## Api Endpoints
+
+# `localhost:3600/users` : Insert a new user
+
+Request Body :
+
+```
+{
+	"firstname": "Valentin",
+	"lastname": "Chelle",
+	"email": "valentin.chelle@gmail.com",
+	"password": "test"
+
+}
+```
+
 ### 2019-09-13 update
 
 - Refactored mongoose to a proper common service.
