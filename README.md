@@ -28,7 +28,7 @@ To run the project, please use a command line the following:
 
 ## Api Endpoints
 
-# `localhost:3600/users` : Insert a new user
+### `localhost:3600/users` : Insert a new user
 
 Request Body :
 
