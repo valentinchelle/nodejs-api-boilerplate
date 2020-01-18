@@ -36,6 +36,19 @@ JWT_SECRET=r4ndomStr1ng
 JWT_EXPIRATION_IN_SECONDS=36000
 ```
 
+## Structure
+
+The structure of this boilerplate follows the guideines of the component oriented structure :
+Each component corresponds to a folder, and follows an Model Controller Middlewares sub structure :
+
+- **models** for the database entities ( like `users` ). It is where the schema, and the communication with the table are defined (like `UserModelfindById`).
+- **controllers/** for the actions on the models, that call the models actions ( like the management of the list of the users).
+- **middlewares/** intermediaries between the request and the response. Usually uses and modifies the request body parameters.
+- **routes** for the definition of the endpoints for each actions of the controllers. Defines also what are the middleware used for the routes.
+
+The global logic for an app calling this rest API :
+The app will call an API route ( like `url/modifyuser` ). The router makes the request pass through the middleware (`isConnected()`) towards the controller action (`modifyUser()`). The controller action will then call the model to modify a record in the table.
+
 ## Api Endpoints
 
 ### `localhost:3600/users` : Insert a new user
