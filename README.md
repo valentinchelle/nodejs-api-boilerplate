@@ -26,7 +26,7 @@ You can directly plug this API with the front end of your choice by calling the 
 - [ ] Forgot Password
 - [ ] Reset Password
 - [ ] Delete Account
-- [ ] OAuth 2.0 Authentication via Facebook, Google, GitHub, LinkedIn, Instagram
+- [ ] OAuth 2.0 Authentication via Facebook, Google
 - [ ] Easy-to-use endpoints
 
 # Usage

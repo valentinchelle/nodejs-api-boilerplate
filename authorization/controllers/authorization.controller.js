@@ -12,7 +12,9 @@ exports.login = (req, res) => {
       .update(refreshId)
       .digest("base64");
     req.body.refreshKey = salt;
-    let token = jwt.sign(req.body, jwtSecret);
+    let token = jwt.sign(req.body, jwtSecret, {
+      expiresIn: Number(process.env.JWT_EXPIRATION_IN_SECONDS)
+    });
     let b = new Buffer(hash);
     let refresh_token = b.toString("base64");
     res.status(201).send({ accessToken: token, refreshToken: refresh_token });
@@ -24,7 +26,9 @@ exports.login = (req, res) => {
 exports.refresh_token = (req, res) => {
   try {
     req.body = req.jwt;
-    let token = jwt.sign(req.body, jwtSecret);
+    let token = jwt.sign(req.body, jwtSecret, {
+      expiresIn: Number(process.env.JWT_EXPIRATION_IN_SECONDS)
+    });
     res.status(201).send({ id: token });
   } catch (err) {
     res.status(500).send({ errors: err });
