@@ -1,24 +1,25 @@
 const UserModel = require("../models/users.model");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 
 exports.insert = (req, res) => {
   // Makes sure the email address does not exist already});
-  let salt = crypto.randomBytes(16).toString("base64");
+  if (req.body.password) {
+    // asynchronously generate a secure password using 10 hashing rounds
+    bcrypt.hash(req.body.password, 10, function(err, hash) {
+      // Store secure hash in user record
+      req.body.password = hash;
+      req.body.permissionLevel = 1;
 
-  let hash = crypto
-    .createHmac("sha512", salt)
-    .update(req.body.password)
-    .digest("base64");
-  req.body.password = salt + "$" + hash;
-  req.body.permissionLevel = 1;
-
-  UserModel.createUser(req.body)
-    .then(result => {
-      res.status(201).send({ id: result._id });
-    })
-    .catch(function(error) {
-      res.status(409).send(error);
+      UserModel.createUser(req.body)
+        .then(result => {
+          res.status(201).send({ id: result._id });
+        })
+        .catch(function(error) {
+          res.status(409).send(error);
+        });
     });
+  }
 };
 
 exports.list = (req, res) => {

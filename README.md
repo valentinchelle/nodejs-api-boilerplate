@@ -42,6 +42,11 @@ Request Body :
 }
 ```
 
+# References
+
+Encrypting the passwords :
+https://github.com/goldbergyoni/nodebestpractices/tree/security-best-practices-section#-68-avoid-using-the-nodejs-crypto-library-for-passwords-use-bcrypt
+
 ### 2019-09-13 update
 
 - Refactored mongoose to a proper common service.
