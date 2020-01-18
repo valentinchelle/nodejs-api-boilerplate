@@ -35,9 +35,9 @@ Request Body :
 ```
 {
 	"firstname": "Valentin",
-	"lastname": "Chelle",
-	"email": "valentin.chelle@gmail.com",
-	"password": "test"
+	"lastname": "Rigolo",
+	"email": "valentin.rigolo@azerty.com",
+	"password": "secret"
 
 }
 ```
