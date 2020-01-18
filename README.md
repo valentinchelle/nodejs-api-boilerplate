@@ -26,6 +26,16 @@ To run the project, please use a command line the following:
 
 - mongodb configuration in common/services/mongoose.service
 
+- Add a file `.env` at the root of the folder (same level as `index.js`), copy paste the following template and fill it with the right information like :
+
+```
+PORT=3600
+APP_END_POINT=http://localhost:3600
+API_END_POINT=http://localhost:3600
+JWT_SECRET=r4ndomStr1ng
+JWT_EXPIRATION_IN_SECONDS=36000
+```
+
 ## Api Endpoints
 
 ### `localhost:3600/users` : Insert a new user
@@ -40,6 +50,47 @@ Request Body :
 	"password": "secret"
 
 }
+```
+
+# Understanding the login logic
+
+## Step 1 : Login with credentials
+
+The first step in the login process, is for a registered user to send its email/passsword.
+Endpoint : `endpoint:3600/auth`
+Body :
+
+```
+{
+	"email": "user@azerty.com",
+	"password": "secret"
+}
+```
+
+If the login credentials are right, the response should be like:
+
+```
+{
+"accessToken": "eyJhbGcidOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTIzNjRlZDQ4NDE2YzY2ZjYwMGIwYjgiLCJlbWFpbCI6InZhbGVudGluLmNoZWxsZTNAZ21haWwuY29tIiwicGVybWlzc2lvbkxldmVsIjoxLCJwcm92aWRlciI6ImVtYWlsIiwibmFtZSI6InVuZGVmaW5lZCB1bmRlZmluZWQiLCJyZWZyZXNoS2V5IjoiRUlVUk12NENQKytOZitzSHRnZThFZz09IiwiaWF0IjoxNTc5Mzc5NTY1fQ.jBIa5DNI0ObjVW7i3qF68XguKxuw_4lLmr-5S15rOp4",
+"refreshToken": "RFZJZE5YRWldTS3B2bWtUUlByaVZUeVJNTVFyYko5Sm80OUsycWtYUU9PYlFuQURCYkh4K202YWxnd2IybmFiRkQ0TWl2TElQemJKeGUrQ3FpdXVmR3c9PQ=="
+}
+```
+
+The access token is the famous `json web token`. It is a stateless string that will allow someone to stay logged everytime they provide this token to the server.
+
+## Step 2 : Stay logged with the JWT
+
+In order to make your users stay logged on your app, you have to provide the jwt for each request. To do that,
+Grab the `accessToken` from the previous request, prefix it with `Bearer` and add it to the request headers under Authorization.
+This will be required for every route with the middleware `ValidationMiddleware.validJWTNeeded` like :
+
+```
+  app.patch("/users/:userId", [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+    UsersController.patchById
+  ]);
 ```
 
 # References
@@ -58,3 +109,11 @@ If you are familiar to docker and you have docker installed on your machine and 
 - docker-compose up
 - It will run the mongodb at port 27017 (for testing purposes only).
 - It will run the server at port 3600.
+
+```
+
+```
+
+```
+
+```
