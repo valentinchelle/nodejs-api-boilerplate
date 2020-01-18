@@ -1,14 +1,13 @@
-# REST API Tutorial
+# NodeJs Api Boilerplate
 
-This sample is published as part of the blog article at www.toptal.com/blog:
+A boilerplate for **NodeJs** Rest Api.
 
-https://github.com/makinhs/rest-api-tutorial
+You probably know how hard it is to start a node js API, with a well structured and clean code. Especially if you are on a rush for an hackhaton or a school project.
+I give you here a clean code, that implements what essential for a new API project : a clean nodejs structure implementing a User System following the best practices.
 
-- https://www.toptal.com/nodejs/secure-rest-api-in-nodejs
+You can directly plug this API with the front end of your choice by calling the different endpoints. I also give details on how to extend this code to adapt it for your project.
 
-Visit www.toptal.com/blog and subscribe to our newsletter to read great posts
-
-## Before using
+# Prerequisites
 
 - Please make sure that you have:
 - node.js installed (https://nodejs.org/)
@@ -16,7 +15,21 @@ Visit www.toptal.com/blog and subscribe to our newsletter to read great posts
   - Using Windows, just open the terminal at where you installed mongo and run `mongod.exe`
 - run npm install in your root project folder
 
-## Usage
+# Features
+
+(STILL IN DEVELOMENT)
+
+- [x] Clean Structure Component Oriented
+- [ ] Templates to create your own components
+- [x] Secure Authentification System with email/password using **JWT**.
+- [ ] Change Password
+- [ ] Forgot Password
+- [ ] Reset Password
+- [ ] Delete Account
+- [ ] OAuth 2.0 Authentication via Facebook, Google, GitHub, LinkedIn, Instagram
+- [ ] Easy-to-use endpoints
+
+# Usage
 
 To run the project, please use a command line the following:
 
@@ -36,7 +49,7 @@ JWT_SECRET=r4ndomStr1ng
 JWT_EXPIRATION_IN_SECONDS=36000
 ```
 
-## Structure
+# Structure
 
 The structure of this boilerplate follows the guideines of the component oriented structure :
 Each component corresponds to a folder, and follows an Model Controller Middlewares sub structure :
@@ -44,7 +57,7 @@ Each component corresponds to a folder, and follows an Model Controller Middlewa
 - **models** for the database entities ( like `users` ). It is where the schema, and the communication with the table are defined (like `UserModelfindById`).
 - **controllers/** for the actions on the models, that call the models actions ( like the management of the list of the users).
 - **middlewares/** intermediaries between the request and the response. Usually uses and modifies the request body parameters.
-- **routes** for the definition of the endpoints for each actions of the controllers. Defines also what are the middleware used for the routes.
+- **routes.js** for the definition of the endpoints for each actions of the controllers. Defines also what are the middleware used for the routes.
 
 The global logic for an app calling this rest API :
 The app will call an API route ( like `url/modifyuser` ). The router makes the request pass through the middleware (`isConnected()`) towards the controller action (`modifyUser()`). The controller action will then call the model to modify a record in the table.
@@ -111,22 +124,12 @@ This will be required for every route with the middleware `ValidationMiddleware.
 Encrypting the passwords :
 https://github.com/goldbergyoni/nodebestpractices/tree/security-best-practices-section#-68-avoid-using-the-nodejs-crypto-library-for-passwords-use-bcrypt
 
-### 2019-09-13 update
+# Credits
 
-- Refactored mongoose to a proper common service.
-- Added a Dockerfile and docker-compose configuration.
+This project has been largely inspired by the following work :
 
-If you are familiar to docker and you have docker installed on your machine and just want to run the project without issues please do:
+https://github.com/makinhs/rest-api-tutorial
 
-- docker-compose build
-- docker-compose up
-- It will run the mongodb at port 27017 (for testing purposes only).
-- It will run the server at port 3600.
+- https://www.toptal.com/nodejs/secure-rest-api-in-nodejs
 
-```
-
-```
-
-```
-
-```
+Visit www.toptal.com/blog and subscribe to our newsletter to read great posts
